@@ -6,21 +6,6 @@
     <br>
 </p>
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
-
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
-
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
-
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
-
 DIRECTORY STRUCTURE
 -------------------
 
@@ -58,3 +43,57 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+
+После установки тестового проекта на локальном сервере необходимо выполнить команду
+
+<p>composer update</p>
+
+База данных test находится в коренвом каталоге проекта в папке DB.
+
+Если необходимо выполнить установку БД через миграции, то
+
+php yii migrate
+
+Поскольку установлено расширение сохранения переводов служебных сообщений 
+https://github.com/zelenin/yii2-i18n-module
+
+для корректной работы необходимо также выполнить команду 
+
+php yii migrate –migrationPath=@Zelenin/yii/modules/I18n/migrations
+
+*ВАЖНО* При установке БД через миграции необходимо откорректировать в PHPMyAdmin все значения текстовых полей, в данном случае поля text таблицы articles (сменить VARCHAR на TEXT). Иначе будет ошибка добавления текстов статей блога.
+
+Мультиязычность.
+
+1. Количество языков неограниченно.
+2. URL сайта представлены как ЧПУ и SEO оптимизированы. Ссылки вида:
+example.com/en/mypage
+example.com/ru/mypage
+example.com/uk/mypage
+3. Минимальные изменения в работе с фреймворком. Ресурс по ссылке example.com/mypage должен отдаваться на языке, установленным по умолчанию. Правила роутинга не изменяются в зависимости от количества языков.
+Хранение языков
+Таблица lang. 
+
+Авторизация.
+
+Стандартная (из коробки).
+Изменена авторизация с имени юзера на мейл. Сделано модальное окно авторизации + Facebook.
+Сделал на расширении yii2-authclient.
+На практике обычно пользуюсь 
+http://www.amigodev.com/article/yii2/yii2-user-socials
+
+Своего боевого хоста не имею. Поэтому код и айдишники сайта необходимо добавить.
+
+При сокрытии админки возможно сделать авторизацию по username. 
+Админку только под админа на тестовом задании не закрывал (в жизни это не допустимо и решается обычно RBAC).
+
+На https://github.com/NeroSys/API_testing есть реализация не только прав админа, но и прав комментирования и апдейта статей блога.
+
+
+Картинки.
+
+Реализована простая щагрузка картинок, которые не удаляются из папок upload при удалении из БД.
+В проектах это недопустимо. Но в тестовом задании этого не было, поэтому не заморачивался. 
+Кроппер реализован простой.
+
+Все ЧПУ ссылки и СЕО под мета-теги тоже реализовал.
